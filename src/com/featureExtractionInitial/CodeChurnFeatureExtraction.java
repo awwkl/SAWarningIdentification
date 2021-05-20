@@ -80,15 +80,21 @@ public class CodeChurnFeatureExtraction {
 		String twentyFiveRevisionBefore = "";
 		try {
 			while ( rs.next() ){
-				if ( count < 25 ){
-					count++;
-				}				
-				else if ( count == 25){
-					twentyFiveRevisionBefore = rs.getString( "commitTime");
-				}
-				else{
-					break;
-				}
+				count++;
+				twentyFiveRevisionBefore = rs.getString("commitTime");
+
+				System.out.println("" + count + ": " + twentyFiveRevisionBefore);
+				
+				if (count == 25) break;
+				// if ( count < 25 ){
+				// 	count++;
+				// }				
+				// else if ( count == 25){
+				// 	twentyFiveRevisionBefore = rs.getString( "commitTime");
+				// }
+				// else{
+				// 	break;
+				// }
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -108,6 +114,8 @@ public class CodeChurnFeatureExtraction {
 			priorTime = this.obtainThreeMonthBeforeTime();
 		}
 		
+		System.out.println("priorTime: " + priorTime);
+
 		HashMap<String, HashMap<String, Object>> result = new HashMap<String, HashMap<String, Object>>();
 		
 		for ( int i =0; i < projectInfo.getPackageList().size(); i++ ){

@@ -9,6 +9,38 @@ import ca.uwaterloo.ece.qhanam.slicer.Slicer;
 
 public class Constants {
 	
+	public final static String COMMIT_INFO_TABLE = "SAWI_commit_info";
+	public final static String COMMIT_CONTENT_TABLE = "SAWI_commit_content";
+	public final static String ISSUE_TABLE = "SAWI_issue_info";
+	public final static String LOG_CODE_FOLDER_OUT  = "working/logcode-files/";
+	
+	public final static String WARNING_FILE_NAME = "working/spotbugs.xml";
+	// public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\lucene-solr\\";
+	public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\SAWarningIdentification\\src\\";
+	
+	public final static String CURRENT_COMMIT_TIME 	= "2018-07-17 00:00:00"; 
+	public final static int CURRENT_REVISION_NUMBER = 1;
+	
+	public final static String GIVEN_EARLIEST_TIME = "2017-01-01 21:44:36.000000";   
+	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 7;
+	public final static Integer MAX_REVISION_NUMBER = 7;
+	/*
+	public final static String COMMIT_INFO_TABLE = "lucene_commit_info";
+	public final static String COMMIT_CONTENT_TABLE = "lucene_commit_content";
+	public final static String ISSUE_TABLE = "lucene_issue_info";
+	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-lucene/";
+	
+	public final static String WARNING_FILE_NAME = "data/spotbugs.xml";
+	public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\lucene-solr\\";
+	
+	public final static String CURRENT_COMMIT_TIME 	= "2015-04-01 00:00:00"; 
+	public final static int CURRENT_REVISION_NUMBER = 3891;
+	
+	public final static String GIVEN_EARLIEST_TIME = "2001-09-11 21:44:36.000000";   
+	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 25862;
+	public final static Integer MAX_REVISION_NUMBER = 25862;
+	*/
+	/*
 	public final static String COMMIT_INFO_TABLE = "lucene_commit_info";
 	public final static String COMMIT_CONTENT_TABLE = "lucene_commit_content";
 	public final static String ISSUE_TABLE = "lucene_issue_info";
@@ -23,7 +55,7 @@ public class Constants {
 	public final static String GIVEN_EARLIEST_TIME = "2001-09-11 21:44:36.000000";   
 	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 25862;
 	public final static Integer MAX_REVISION_NUMBER = 25862;
-	
+	*/
 	/*
 	public final static String COMMIT_INFO_TABLE = "tomcat_commit_info";
 	public final static String COMMIT_CONTENT_TABLE = "tomcat_commit_content";
@@ -157,13 +189,14 @@ public class Constants {
 	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 14044;
 	public final static Integer MAX_REVISION_NUMBER = 14044;
 		*/
-	public final static String LOG_FILE_IN = "data/log.txt";
-	public final static String LOG_CODE_FILE_IN = "data/logCode.txt";
 	
-	public final static String GROUND_TRUTH_FOLDER = "data/groundtruth/";
+	public final static String LOG_FILE_IN = "working/log.txt";
+	public final static String LOG_CODE_FILE_IN = "working/logCode.txt";
 	
-	//public final static String WARNING_FILE_IN = "data/warning.csv";
-	public final static String WARNING_FILE_OUT = "data/warning-result.txt";
+	public final static String GROUND_TRUTH_FOLDER = "working/groundtruth/";
+	
+	//public final static String WARNING_FILE_IN = "working/warning.csv";
+	public final static String WARNING_FILE_OUT = "working/warning-result.txt";
 	
 	public final static String PROJECT_NAME = "apache";
 	
@@ -178,12 +211,12 @@ public class Constants {
 	//public final static String FORMER_REVISION_TIME_UNDER_INVEST = "2013-07-01 00:00:01";
 	//public final static String LATTER_REVISION_TIME_UNDER_INVEST = "2014-07-01 00:00:01";
 	
-	public final static String FEATURE_VALUE_OUTPUT_FOLDER = "data/feature/";
+	public final static String FEATURE_VALUE_OUTPUT_FOLDER = "working/feature/";
 	
 	public final static String[] WARN_CATEGORY_UNDER_INVESTIGATION = {"MALICIOUS_CODE", "CORRECTNESS", "PERFORMANCE", "SECURITY", 
 			"MT_CORRECTNESS", "BAD_PRACTICE", "EXPERIMENTAL", "STYLE", "I18N"};
 	//"BAD_PRACTICE", "EXPERIMENTAL",	"STYLE", "I18N" 
-	//dodgy codeÃ»ÓÐ£¬¶àÁËstyle£¬Ó¦¸ÃÕâÁ½¸öÊÇÒ»ÑùµÄ
+	//dodgy codeÃ»ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½styleï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½
 	
 	// correctness, vulnerability, malicious code, security, multithreaded performance, bad practice
 	
@@ -194,7 +227,7 @@ public class Constants {
 	
 	public final static String JRE_LOCATION  = "C:\\Program Files\\Java\\jre1.8.0_91\\lib\\\rt.jar";
 	
-	//source code slicer/parser Ïà¹ØµÄ
+	//source code slicer/parser ï¿½ï¿½Øµï¿?
 	public final static String[] BINARY_OPERATION = { "*", "/", "%", "+", "-", "&", "^", "|", "+=", "-=", "*=", "/=", "&=", "^=", "|=", "++", "--"};
 	public final static String[] METHOD_FIELD_VISIBILITY = { "public", "private", "protected"};
 	public final static String[] METHOD_FIELD_TYPE = { "static", "final", "abstract" };

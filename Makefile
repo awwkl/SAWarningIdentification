@@ -8,7 +8,7 @@ compile:
 	javac -d classes -cp "src;lib/*" src/com/featureExtractionRefined/OverallFeatureExtraction.java
 	
 run:
-	java -cp "classes;lib/*" com.featureExtractionRefined.OverallFeatureExtraction -Xmx2048m
+	java -cp "classes;lib/*" com.featureExtractionRefined.OverallFeatureExtraction
 
 logCode:
 	git log -p --pretty="format:GitDiffStart: %H | %ad" > logCode.txt --abbrev=7 --no-renames --no-merges

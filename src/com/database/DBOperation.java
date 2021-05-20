@@ -12,7 +12,7 @@ public class DBOperation {
 	private static final String DBURL = "jdbc:mysql://localhost:3306/";
 	private static final String DBNAME = "staticwarning";
 	private static final String DBUSER = "root";
-	private static final String DBPASSWORD = "1234";
+	private static final String DBPASSWORD = "password";
 	private static Connection conn;
 	private static Statement stmt;
 	
