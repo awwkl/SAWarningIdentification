@@ -147,43 +147,28 @@ public class LogParser {
 			System.out.println ( "issueNumber: " + issueIdNumber );
 			br.close();
 			
-			ArrayList<String> commitCodeList  = new ArrayList<String>(); 
-			boolean isEnd = false;
-			while ( ( line = brCode.readLine() ) != null || isEnd == false) {
-				if ( line == null || line.startsWith( "GitDiffStart:") ){  
-					//line == null 表示已经结束了，需要将最后一个进行存储
-					if ( commitCodeList.size() != 0 && commitId != -1 ){
-						//写文件		
-						BufferedWriter output = new BufferedWriter ( new OutputStreamWriter ( new FileOutputStream ( new File ( Constants.LOG_CODE_FOLDER_OUT + commitId + ".txt" )) , "GB2312"), 1024);
-						for ( int i = 0; i< commitCodeList.size() ; i++ ){
-							output.write( commitCodeList.get( i ));
-							output.newLine();
-						}
-						output.flush();
-						output.close();
-						
-						commitCodeList = new ArrayList<String>();
-					}
+			BufferedWriter output = new BufferedWriter ( new OutputStreamWriter ( System.out ) );
+			while ( ( line = brCode.readLine() ) != null) {
+				if ( line.startsWith( "GitDiffStart:") ){
+					output.flush(); 
+					output.close();
 					
-					if ( line != null ){
-						Pattern pattern = Pattern.compile("[|#&]+");
-						String[] temp= pattern.split( line );
-						String commitHash = temp[0].substring(new String ("GitDiffStart:").length()).trim();
-						
-						commitId = -1;
-						if ( hashIdToCommitId.containsKey( commitHash.trim() )){
-							commitId = hashIdToCommitId.get( commitHash.trim() );
-						}else{
-							System.out.println ( "do not have the hashid : " + commitHash.trim() );
-						}		
-					}								
+					Pattern pattern = Pattern.compile("[|#&]+");
+					String[] temp= pattern.split( line );
+					String commitHash = temp[0].substring(new String ("GitDiffStart:").length()).trim();
+					commitId = -1;
+					if ( hashIdToCommitId.containsKey( commitHash.trim() )){
+						commitId = hashIdToCommitId.get( commitHash.trim() );
+					} else{
+						System.out.println ( "do not have the hashid : " + commitHash.trim() );
+					}
+
+					output = new BufferedWriter ( new OutputStreamWriter ( new FileOutputStream ( new File ( Constants.LOG_CODE_FOLDER_OUT + commitId + ".txt" )) , "GB2312"), 1024);
 				}
-				
-				if ( line != null )			
-					commitCodeList.add( line );
-				else
-					isEnd = true;
+				output.write(line);
 			}
+			output.flush();
+			output.close();
 			
 			brCode.close();
 			
