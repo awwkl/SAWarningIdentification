@@ -166,6 +166,7 @@ public class LogParser {
 					output = new BufferedWriter ( new OutputStreamWriter ( new FileOutputStream ( new File ( Constants.LOG_CODE_FOLDER_OUT + commitId + ".txt" )) , "GB2312"), 1024);
 				}
 				output.write(line);
+				output.newLine();
 			}
 			output.flush();
 			output.close();

@@ -2,7 +2,7 @@ compile-log:
 	javac -d classes -cp "src;lib/*" src/com/git/LogParser.java
 
 run-log:
-	java -cp "classes;lib/*" com.git.LogParser -Xmx2048m
+	java -cp "classes;lib/*" com.git.LogParser
 
 compile:
 	javac -d classes -cp "src;lib/*" src/com/featureExtractionRefined/OverallFeatureExtraction.java
