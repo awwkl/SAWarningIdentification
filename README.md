@@ -37,7 +37,7 @@ git log --name-status --pretty="format:GitCommitStart: %H |#& %an |#& %ae |#& %a
 * Compile and run the LogParser program to parse the commit data of the target project and load into SQL database
 ```
 javac -d classes -cp "src;lib/*" src/com/git/LogParser.java
-java -cp "classes;lib/*" com.git.LogParser -Xmx2048m
+java -cp "classes;lib/*" com.git.LogParser
 ```
 
 ### 3. Feature Extraction
@@ -46,7 +46,7 @@ java -cp "classes;lib/*" com.git.LogParser -Xmx2048m
 * Compile and run the OverallFeatureExtraction program to extract SA warning features
 ```
 javac -d classes -cp "src;lib/*" src/com/featureExtractionRefined/OverallFeatureExtraction.java
-java -cp "classes;lib/*" com.featureExtractionRefined.OverallFeatureExtraction -Xmx2048m
+java -cp "classes;lib/*" com.featureExtractionRefined.OverallFeatureExtraction
 ```
 
 ### 4. Feature Selection
