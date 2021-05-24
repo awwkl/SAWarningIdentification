@@ -149,7 +149,7 @@ public class CodeChurnFeatureExtraction {
 				HashMap<String, Object> thisCodeChurn = this.obtainCodeChurnBasedCommit(commitFileName, fileName);
 				totalCodeChurn.add( thisCodeChurn );
 				
-				if ( rs.next() )
+				if ( rs.next() )	// suspicious code ??? doesnt this skip a row?
 					continue;
 				else
 					break;
@@ -161,6 +161,7 @@ public class CodeChurnFeatureExtraction {
 		}	
 		
 		HashMap<String, Object> codeChurnInfo = this.obtainTotalCodeChurn(totalCodeChurn);
+		System.out.println("[Churn] " + codeChurnInfo + " for " + fileName);
 		return codeChurnInfo;
 	}
 	
@@ -195,7 +196,6 @@ public class CodeChurnFeatureExtraction {
 		}
 		codeChurnInfo.put( "percentChurn", percentChurn );
 		
-		System.out.println( codeChurnInfo.toString() );
 		return codeChurnInfo;		
 	}
 	
@@ -308,6 +308,10 @@ public class CodeChurnFeatureExtraction {
 	
 	//需要查看commitFileName中特定文件的变更
 	public HashMap<String, Object> obtainCodeChurnBasedCommit ( String commitFileName, String fileName ){
+
+		System.out.println("--- obtainCodeChurnBasedCommit ---");
+		System.out.println("commitFileName: " + commitFileName + ", fileName: " + fileName);
+		
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader( new File ( commitFileName ) ));
@@ -319,31 +323,34 @@ public class CodeChurnFeatureExtraction {
 			boolean isRelatedFile = false;
 			while ( ( line = br.readLine() ) != null ) {
 				totalCode ++;
-				//fileName相关的文件已经遍历完了
-				if ( line.startsWith( "diff") && isRelatedFile == true )
-					break;
-				//接下来的都是与fileName文件相关的
-				if ( isRelatedFile == false && line.contains( fileName ))
-					isRelatedFile = true;
-				//如果是不相关的，继续
+				if ( line.startsWith( "diff")) {
+					if ( isRelatedFile ) 
+						break;
+					if ( line.contains(fileName) ) 
+						isRelatedFile = true;
+				} 
 				if ( isRelatedFile == false )
 					continue;
 				
-				if ( line.startsWith( "+ ")  ){
-					line = line.substring( 2);
+				if ( line.startsWith( "+") && line.length() > 1 && !line.startsWith("+++") ){
+					line = line.substring(1);
 					line = line.trim();
 					if ( line.equals( ""))
 						continue;
 					addCodeList.add( line );
 				}
-				if ( line.startsWith( "- ")){
-					line = line.substring( 2);
+				if ( line.startsWith( "-") && line.length() > 1 && !line.startsWith("---") ){
+					line = line.substring(1);
 					line = line.trim();
 					if ( line.equals( ""))
 						continue;
 					deleteCodeList.add( line );
 				}			
 			}
+
+			System.out.println("Total code: " + totalCode);
+			System.out.println("addCodeList.size(): " + addCodeList.size());
+			System.out.println("deleteCodeList.size(): " + deleteCodeList.size());
 			
 			ArrayList<String> refinedAddCodeList = new ArrayList<String>();
 			refinedAddCodeList.addAll( addCodeList );
