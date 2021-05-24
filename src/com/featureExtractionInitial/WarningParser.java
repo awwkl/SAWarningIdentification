@@ -147,9 +147,7 @@ public class WarningParser {
 					System.out.println ( "@SKIP: Wrong parse! Do not have the information!" + bugInfo.getType() );
 				}
 			}
-			System.out.println( warningInfoList.size() );
 		} catch (JDOMException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		
@@ -324,7 +322,6 @@ public class WarningParser {
 			}
 		}
 		
-		System.out.println ( "refined warning list size: " + refinedWarningList.size() ); 
 		return refinedWarningList;
 	}
 	

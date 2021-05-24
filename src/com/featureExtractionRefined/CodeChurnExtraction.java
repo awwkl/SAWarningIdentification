@@ -44,6 +44,9 @@ public class CodeChurnExtraction extends BasicFeatureExtraction{
 		
 		String fileName = warning.getBugLocationList().get(0).getClassName();
 		String packageName = projectInfo.getFilePackageNameMap().get( fileName );
+
+		System.out.println("Filename: " + fileName);
+		System.out.println("PackageName: " + packageName);
 		
 		HashMap<String, Object> F35_to_F40 = featureExtraction.extractCodeChurnInFile_F35_to_F40(fileName, codeChurnFileTime );		
 		HashMap<String, Object> F126_to_F131 = featureExtraction.extractCodeChurnInFile_F126_to_F131(fileName, codeChurnFileRevision );		

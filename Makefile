@@ -1,10 +1,10 @@
 ### 1. Prepare target project files
 get-commit-log-info:
-	git log -p --abbrev=7 --no-renames --no-merges --pretty="format:GitDiffStart: %H | %ad" > logCode.txt
-	
-get-commit-log-content:
 	git log --name-status --no-renames --no-merges --pretty="format:GitCommitStart: %H |#& %an |#& %ae |#& %ad |#& %at |#& %s |#& %b %n---------------filePathSplit---------------" > log.txt
 
+get-commit-log-content:
+	git log -p --abbrev=7 --no-renames --no-merges --pretty="format:GitDiffStart: %H | %ad" > logCode.txt
+	
 get-commit-time-in-iso:
 	git log --date=iso
 

@@ -39,16 +39,23 @@ public class BasicFeatureExtraction {
 		
 		WarningParser warningParser = new WarningParser();
 		warningList = warningParser.parseFingbugsWarnings ( fileName );
+		System.out.println("(A) warningList size: " + warningList.size());
+		
 		warningList = warningParser.refineWarningInfoListStyle( warningList );
+		System.out.println("(B) warningList size: " + warningList.size());
 		
 		warningList = warningParser.obtainCodeInfo(warningList, folderName);
+		System.out.println("(C) warningList size: " + warningList.size());
 		this.writeToFileWarning(warningList, Constants.FEATURE_VALUE_OUTPUT_FOLDER + "warningInfoOriginal.csv" );
 		
 		warningList = warningParser.refineWarningWithoutCode(warningList);
+		System.out.println("(D) warningList size: " + warningList.size());
 		this.writeToFileWarning(warningList, Constants.FEATURE_VALUE_OUTPUT_FOLDER + "warningInfo.csv" );		
 	
 		ProjectExplore projectExplore = new ProjectExplore();
 		projectInfo = projectExplore.obtainPackageClassInfo(fileName);
+
+		projectInfo.printProjectInfo();
 		
 		featureOfPackage = new HashMap<String, HashMap<String, Object>>();
 		featureOfProject = new HashMap<String, Object>();
@@ -64,7 +71,7 @@ public class BasicFeatureExtraction {
 	}
 	
 	public void generateFeatures ( ){
-		this.featureExtractionPrecondition();
+		this.featureExtractionPrecondition();	// set up variables
 		
 		//for ( int i =0; i < warningList.size() ; i++ ){
 		System.out.println( "================================================= warningList size: " +  warningList.size() );
@@ -76,7 +83,7 @@ public class BasicFeatureExtraction {
 			for ( int j = 0; j < warning.getBugLocationList().size(); j++ ){
 				methodNameList.add( warning.getBugLocationList().get(j).getRelatedMethodName() );
 			}
-			System.out.println( methodNameList.toString() );
+			System.out.println( "Method name list: " + methodNameList.toString() );
 			
 			HashMap<String, Object> featureValue = this.extractFeatures( warning, i );
 			this.writeToFile(featureValue, i);
