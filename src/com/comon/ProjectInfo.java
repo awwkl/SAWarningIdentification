@@ -60,6 +60,35 @@ public class ProjectInfo {
 		totalWarningCount = 0;
 	}
 
+	public void printProjectInfo() {
+		System.out.println("--- Printing packageList ---");
+		for (String s: packageList) 
+			System.out.println(s);
+
+		System.out.println("--- Printing warningNumForPackage ---");
+		for (String key: warningNumForPackage.keySet()) 
+			System.out.println(key + ": " + warningNumForPackage.get(key));
+
+		System.out.println("--- Printing fileListForPackage ---");
+		for (String pkg : fileListForPackage.keySet())
+			for (String fileName : (fileListForPackage.get(pkg)))
+				System.out.println("Package: " + pkg + ", File: " + fileName);
+		
+		System.out.println("--- Printing warningNumForFile ---");
+		for (String key: warningNumForFile.keySet()) 
+			System.out.println(key + ": " + warningNumForFile.get(key));
+
+		System.out.println("--- Printing classNumForFile ---");
+		for (String key: classNumForFile.keySet()) 
+			System.out.println(key + ": " + classNumForFile.get(key));
+
+		System.out.println("--- Printing filePackageNameMap ---");
+		for (String key: filePackageNameMap.keySet()) 
+		System.out.println(key + ": " + filePackageNameMap.get(key));
+		
+		System.out.println("--- Printing totalWarningCount ---");
+		System.out.println("totalWarningCount: " + totalWarningCount);
+	}
 	
 	public ArrayList<String> getPackageList() {
 		return packageList;
