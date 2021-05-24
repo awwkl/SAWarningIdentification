@@ -40,6 +40,7 @@ public class WarningParser {
 			
 			System.out.println( warningList.size() );
 			for ( int i = 0;  i < warningList.size(); i++ ){
+				System.out.println("--- BugInstance " + i + " ---");
 				Element element = (Element) warningList.get( i );
 				
 				String category = element.getAttribute( "category").getValue();
@@ -113,7 +114,7 @@ public class WarningParser {
 							break;
 					}
 					if ( j < bugLocationList.size() ){
-						System.out.println ( "Multiple class name! Do not store the warning!");
+						System.out.println ( "@SKIP: Multiple class name! Do not store the warning!");
 					}
 					else{
 						String methodName = "";
@@ -133,17 +134,17 @@ public class WarningParser {
 						
 						StaticWarning warning = new StaticWarning ( bugInfo, bugLocationList );
 						warningInfoList.add( warning );
-						System.out.println( warning.toString() );
+						System.out.println( "@ADD primary: " + warning.toString() );
 					}			
 				}
 				//处理没有单独的SourceLine的情况，直接把所有的都加上
 				else if ( secBugLocationList.size() != 0 ){
 					StaticWarning warning = new StaticWarning ( bugInfo, secBugLocationList );
 					warningInfoList.add( warning );
-					System.out.println( warning.toString() );
+					System.out.println( "@ADD secondary: " + warning.toString() );
 				}				
 				else{
-					System.out.println ( "Wrong parse! Do not have the information!" + bugInfo.getType() );
+					System.out.println ( "@SKIP: Wrong parse! Do not have the information!" + bugInfo.getType() );
 				}
 			}
 			System.out.println( warningInfoList.size() );
@@ -159,9 +160,9 @@ public class WarningParser {
 	public ArrayList<BugLocation> parseSpecificSite( Element element, String regionStr, BUG_LOCATION_REGION_TYPE region ){
 		ArrayList<BugLocation> bugLocationList = new ArrayList<BugLocation>();
 		
-		List typeList = element.getChildren( regionStr );
+		List typeList = element.getChildren( regionStr );	// element.getChildren("Class")
 		if ( typeList != null && typeList.size() != 0  ){
-			for ( int j = 0; j < typeList.size(); j++ ){
+			for ( int j = 0; j < typeList.size(); j++ ){	// for each sub-element
 				Element detailElement = (Element) typeList.get( j );
 				
 				String methodName = "";
@@ -212,7 +213,7 @@ public class WarningParser {
 	}
 	
 	
-	public ArrayList<String> obtainAllFiles ( String filePath, String relativePath ){
+	public ArrayList<String> obtainAllFiles ( String filePath, String relativePath ){	// obtainAllFiles(Constants.FOLDER_NAME, Constants.FOLDER_NAME)
 		ArrayList<String> fileList = new ArrayList<String>();
 		
 		File root = new File ( filePath );
@@ -236,31 +237,10 @@ public class WarningParser {
 	/*
 	 * 运行该函数，通过codeLine和 源代码信息，得到codeInfo
 	 */
-	public ArrayList<StaticWarning> obtainCodeInfo( ArrayList<StaticWarning> warningInfoList, String folderName  ){
+	public ArrayList<StaticWarning> obtainCodeInfo( ArrayList<StaticWarning> warningInfoList, String folderName  ){	// obtainCodeInfo(warningList, Constants.FOLDER_NAME)
 		
 		ArrayList<String> fileList = this.obtainAllFiles( folderName, folderName );
-		
-		ArrayList<String> shortFileList = new ArrayList<String>();
-		/*
-		 * 初始的fileName是这种形式 lucene\analysis\kuromoji\src\java\org\apache\lucene\analysis\ja\tokenattributes\ReadingAttribute.java
-		 * warning.xml里面的package是这种形式 org\apache\lucene\analysis\ja\tokenattributes\ReadingAttribute.java
-		 * 都是从org开始的
-		 */
-		for ( int i = 0; i < fileList.size(); i++ ){
-			String fileName = fileList.get( i );
-			
-			int orgIndex = fileName.indexOf( "org");
-			if ( orgIndex < 0 ){
-				shortFileList.add( fileName );
-			}
-			else{
-				fileName = fileName.substring( orgIndex );
-				shortFileList.add( fileName );
-			}
-		}
-		
-		//System.out.println( fileList.get( 1000 ) + " " + fileList.size() );
-		
+
 		for ( int i = 0; i < warningInfoList.size(); i++ ){
 			StaticWarning warning = warningInfoList.get( i );
 			ArrayList<BugLocation> bugLocationList = warning.getBugLocationList();
@@ -268,61 +248,43 @@ public class WarningParser {
 			for ( int j = 0; j < bugLocationList.size(); j++ ){
 				BugLocation location = bugLocationList.get(j);
 				String className = location.getClassName();
-				
 				className = className.replace( "/", "\\");
+				System.out.println("[Bug " + i + "] Class name: " + className);
+
 				Integer startCodeLine = location.getStartLine();
 				Integer endCodeLine = location.getEndLine();
 				BUG_LOCATION_REGION_TYPE region = location.getRegion();
 				
 				ArrayList<String> codeInfoList = new ArrayList<String>();
-				
-				//专门针对tomcat项目，外面还有一层，但是在warning文件中没有包含
-				//String refinedClassName = "java\\" + className;
-				//针对cass项目
-				String refinedClassName = "src\\java\\" + className;
-				boolean isFind = false;
-				if ( shortFileList.contains( className ) ){
-					isFind = true;
-				}
-				else{
-					if ( shortFileList.contains( refinedClassName ) ){
-						isFind = true;
-						className = refinedClassName;
+				boolean isFound = false;
+				for (String filePath : fileList) {
+					if (filePath.contains(className)) {
+						className = className.replace( "\\", "//");
+						try (BufferedReader br = new BufferedReader(new FileReader( new File ( folderName + filePath )))) {
+							System.out.println ( "	File found: " + folderName + filePath);
+							
+							String line = "";
+							int codeIndex = 0;
+							while ( ( line = br.readLine() ) != null ) {
+								codeIndex += 1;
+								if ( codeIndex >= startCodeLine && codeIndex <= endCodeLine ){
+									codeInfoList.add( line );
+								}
+							}	
+							location.setCodeInfoList( codeInfoList );
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+						isFound = true;
+						break;
 					}
 				}
-					
-				
-				if ( isFind  ) {
-					int index = shortFileList.indexOf( className );
-					String completeClassName = fileList.get( index );
-					
-					BufferedReader br;
-					try {
-						completeClassName = completeClassName.replace( "\\", "//");
-						br = new BufferedReader(new FileReader( new File ( folderName + completeClassName )));
-						//System.out.println ( "------------------------------------------------- " + folderName + completeClassName);
-						
-						String line = "";
-						int codeIndex = 0;
-						while ( ( line = br.readLine() ) != null ) {
-							codeIndex += 1;
-							if ( codeIndex >= startCodeLine && codeIndex <= endCodeLine ){
-								//这里不能用trim，因为需要获得空格
-								codeInfoList.add( line );
-							}
-						}	
-						location.setCodeInfoList( codeInfoList );
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else{
-					System.out.println ( "Do not find the file: " + folderName + className );
-				}
+
+				if (!isFound)
+					System.out.println ( "	@@@ Class not found: " + className );
 			}
 		}	
 		return warningInfoList;
