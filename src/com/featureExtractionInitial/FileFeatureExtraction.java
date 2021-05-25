@@ -54,7 +54,7 @@ public class FileFeatureExtraction {
 				else{
 					System.out.println ( "do not find the history of file: " + fileName );
 					createTime = Constants.CURRENT_COMMIT_TIME;
-					revisionNumber = new Integer ( Constants.CURRENT_REVISION_NUMBER ).toString() ;
+					revisionNumber = Integer.valueOf ( Constants.CURRENT_REVISION_NUMBER ).toString() ;
 				}
 			}
 		} catch (SQLException e) {

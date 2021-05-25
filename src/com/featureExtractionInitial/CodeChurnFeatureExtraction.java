@@ -289,7 +289,7 @@ public class CodeChurnFeatureExtraction {
 				double dValue2 = Double.parseDouble( value2.toString() );
 				newValue = dValue + dValue2;
 			
-				Object newObject = new Double(newValue);
+				Object newObject = Double.valueOf(newValue);
 				result.put( key , newObject );
 			}
 			else{
@@ -298,7 +298,7 @@ public class CodeChurnFeatureExtraction {
 				int iValue2 = Integer.parseInt( value2.toString() );
 				newValue = iValue + iValue2;
 				
-				Object newObject = new Integer ( newValue );
+				Object newObject = Integer.valueOf ( newValue );
 				result.put( key, newObject);
 			}	
 		}

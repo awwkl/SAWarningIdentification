@@ -15,15 +15,14 @@ public class Constants {
 	public final static String LOG_CODE_FOLDER_OUT  = "working/logcode-files/";
 	
 	public final static String WARNING_FILE_NAME = "working/spotbugs.xml";
-	// public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\lucene-solr\\";
-	public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\SAWarningIdentification\\src\\";
+	public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\jadx\\";
 	
-	public final static String CURRENT_COMMIT_TIME 	= "2018-07-17 00:00:00"; 
+	public final static String CURRENT_COMMIT_TIME 	= "2021-05-20 18:29:20"; 
 	public final static int CURRENT_REVISION_NUMBER = 1;
 	
-	public final static String GIVEN_EARLIEST_TIME = "2017-01-01 21:44:36.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 7;
-	public final static Integer MAX_REVISION_NUMBER = 7;
+	public final static String GIVEN_EARLIEST_TIME = "2013-03-18 21:04:23";   
+	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 1402;
+	public final static Integer MAX_REVISION_NUMBER = 1402;
 	/*
 	public final static String COMMIT_INFO_TABLE = "lucene_commit_info";
 	public final static String COMMIT_CONTENT_TABLE = "lucene_commit_content";
@@ -198,7 +197,7 @@ public class Constants {
 	//public final static String WARNING_FILE_IN = "working/warning.csv";
 	public final static String WARNING_FILE_OUT = "working/warning-result.txt";
 	
-	public final static String PROJECT_NAME = "apache";
+	public final static String PROJECT_NAME = "CONSTANTS_PROJECT_NAME";
 	
 	public static enum BUG_LOCATION_REGION_TYPE{
 		CLASS, FIELD, METHOD, TYPE, DEFAULT;
@@ -206,7 +205,7 @@ public class Constants {
 	
 	public final static int FEATURE_SPLIT_SIZE = 20;
 	
-	public final static String CURRENT_TIME = "2017-02-20 17:58:25.000000";
+	public final static String CURRENT_TIME = "2021-05-21 14:47:25.000000";
 
 	//public final static String FORMER_REVISION_TIME_UNDER_INVEST = "2013-07-01 00:00:01";
 	//public final static String LATTER_REVISION_TIME_UNDER_INVEST = "2014-07-01 00:00:01";

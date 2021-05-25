@@ -80,7 +80,7 @@ public class Slicer
 		 * right-hand assignment slicing. */
 		Statement seed = getStatement((ASTNode) cfgNode.getASTNode());
 		if(!this.options.contains(Slicer.Options.OMIT_SEED))
-			statementPairs.put(new Integer(seed.getStartPosition()), seed);
+			statementPairs.put(Integer.valueOf(seed.getStartPosition()), seed);
 		
 		/* Build the control dependency slice. */
 		this.statements = computeSlice(cfgNode, seedVariables, statementPairs, seedLine);
@@ -107,7 +107,7 @@ public class Slicer
 				List<SingleVariableDeclaration> parameters = method.parameters();
 				for(SingleVariableDeclaration parameter : parameters){
 					if(seedVariables.contains(parameter.getName().getFullyQualifiedName())){
-						statementPairs.put(new Integer(method.getStartPosition()), method);
+						statementPairs.put(Integer.valueOf(method.getStartPosition()), method);
 					}
 				}
 			}
@@ -132,7 +132,7 @@ public class Slicer
 			 * 	1. It isn't in yet.
 			 * 	2. We are doing a data dep analysis and it is a data dependency
 			 * 	3. We are doing a control dep analysis and it is a control dependency */
-			if(statement != null && !(statement instanceof Block) && !statementPairs.containsKey(new Integer(statement.getStartPosition()))) 
+			if(statement != null && !(statement instanceof Block) && !statementPairs.containsKey(Integer.valueOf(statement.getStartPosition()))) 
 			{
 				if(this.type == Slicer.Type.CONTROL){
 					if(!this.options.contains(Slicer.Options.OMIT_SEED) || Slicer.getLineNumber(statement) != seedLine){
@@ -151,9 +151,9 @@ public class Slicer
 						else throw new Exception("Slicer only supports FORWARDS or BACKWARDS directions.");
 						
 						/* TODO: We should store a list of statements in the visitor so we don't have to hack SwitchCase statements. */
-						if(cdv.result) statementPairs.put(new Integer(statement.getStartPosition()), statement);
+						if(cdv.result) statementPairs.put(Integer.valueOf(statement.getStartPosition()), statement);
 						for(Statement s : cdv.associatedDependencies){
-							statementPairs.put(new Integer(s.getStartPosition()), s);
+							statementPairs.put(Integer.valueOf(s.getStartPosition()), s);
 						}
 					}
 				}
@@ -164,7 +164,7 @@ public class Slicer
 						else if(this.direction == Slicer.Direction.FORWARDS) ddv = new FDDVisitor(seedVariables, this.options);
 						else throw new Exception("Slicer only supports FORWARDS or BACKWARDS directions.");
 						statement.accept(ddv);
-						if(ddv.result) statementPairs.put(new Integer(statement.getStartPosition()), statement);
+						if(ddv.result) statementPairs.put(Integer.valueOf(statement.getStartPosition()), statement);
 					}
 				}
 			}

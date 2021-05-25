@@ -173,7 +173,7 @@ public class EclipseCFGNode implements ICFGNode<ASTNode> {
 			thisNode.setName(myId);
 			thisNode.setAttribute(Node.LABEL_ATTR, getName());
 			thisNode.setAttribute(Node.FONTNAME_ATTR, "Helvetica");
-			thisNode.setAttribute(Node.FONTSIZE_ATTR, new Integer(10));
+			thisNode.setAttribute(Node.FONTSIZE_ATTR, Integer.valueOf(10));
 			
 			graph.addNode(thisNode);
 		
