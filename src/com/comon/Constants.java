@@ -32,21 +32,24 @@ public class Constants {
 	public final static String COMMIT_CONTENT_TABLE = "SAWI_commit_content";
 	public final static String ISSUE_TABLE = "SAWI_issue_info";
 
+	// Directory for input & output data of tool
+	public final static String WORKING_DIR = "data/";
+	
 	// Input files
-	public final static String WARNING_FILE_NAME = "working/spotbugs.xml";
-	public final static String LOG_FILE_IN = "working/log.txt";
-	public final static String LOG_CODE_FILE_IN = "working/logCode.txt";
+	public final static String WARNING_FILE_NAME = 	WORKING_DIR + "spotbugs.xml";
+	public final static String LOG_FILE_IN = 		WORKING_DIR + "log.txt";
+	public final static String LOG_CODE_FILE_IN = 	WORKING_DIR + "logCode.txt";
 
 	// Output files
-	public final static String LOG_CODE_FOLDER_OUT  = "working/logcode-files/";
-	public final static String FEATURE_VALUE_OUTPUT_FOLDER = "working/feature/";
+	public final static String LOG_CODE_FOLDER_OUT  = 			WORKING_DIR + "logcode-files/";
+	public final static String FEATURE_VALUE_OUTPUT_FOLDER = 	WORKING_DIR + "feature/";
 
 	// Unused files
-	public final static String WARNING_FILE_OUT = "working/warning-result.txt";
-	public final static String GROUND_TRUTH_FOLDER = "working/groundtruth/";
-	//public final static String WARNING_FILE_IN = "working/warning.csv";
+	public final static String WARNING_FILE_OUT = 		WORKING_DIR + "warning-result.txt";
+	public final static String GROUND_TRUTH_FOLDER = 	WORKING_DIR + "groundtruth/";
+	// public final static String WARNING_FILE_IN = 		WORKING_DIR + "warning.csv";
 
-	
+
 	/* The variables below do not need to be changed. */
 	
 	public static enum BUG_LOCATION_REGION_TYPE{

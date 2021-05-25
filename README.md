@@ -11,7 +11,7 @@ Find the instructions here: https://github.com/awwkl/SAWarningIdentification/wik
 * `archive-bin`: previously `bin` directory, archived for reference
 * `archive-data`: previously `data` directory, archived for reference
 * `classes` directory to hold class files
+* `data` directory to hold files for the input & output for this project
 * `features and experimental results`: the values of features of the 40 project revisions used in the paper, as well as some experimental results
 * `lib`: the JAR files the program requires
 * `src`: the source code
-* `working` directory to hold files for the input & output for this project
