@@ -9,208 +9,53 @@ import ca.uwaterloo.ece.qhanam.slicer.Slicer;
 
 public class Constants {
 	
+	// Set FOLDER_NAME to the root directory where you cloned the target project
+	public final static String CURRENT_TIME = "2021-05-21 14:47:25.000000";
+	public final static String PROJECT_NAME = "jadx";
+	public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\jadx\\";
+
+	// Before checking out a specific revision, obtain these values
+	public final static String GIVEN_EARLIEST_TIME = "2013-03-18 17:04:23";
+	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 1402;
+	public final static Integer MAX_REVISION_NUMBER = 1402;
+	
+	// After deciding on the CURRENT_COMMIT_TIME, obtain the REMAINING_REVISIONS
+	public final static String CURRENT_COMMIT_TIME 	= "2021-04-01 00:00:00"; 
+	public final static int REMAINING_REVISIONS = 1386;
+	public final static int CURRENT_REVISION_NUMBER = MAX_REVISION_NUMBER - REMAINING_REVISIONS + 1;
+	
+	
+	/* The variables below are for the input & output data of the tool. They may not need to be changed. */
+
+	// SQL Database table names
 	public final static String COMMIT_INFO_TABLE = "SAWI_commit_info";
 	public final static String COMMIT_CONTENT_TABLE = "SAWI_commit_content";
 	public final static String ISSUE_TABLE = "SAWI_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "working/logcode-files/";
-	
+
+	// Input files
 	public final static String WARNING_FILE_NAME = "working/spotbugs.xml";
-	public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\jadx\\";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2021-05-20 18:29:20"; 
-	public final static int CURRENT_REVISION_NUMBER = 1;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2013-03-18 21:04:23";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 1402;
-	public final static Integer MAX_REVISION_NUMBER = 1402;
-	/*
-	public final static String COMMIT_INFO_TABLE = "lucene_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "lucene_commit_content";
-	public final static String ISSUE_TABLE = "lucene_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-lucene/";
-	
-	public final static String WARNING_FILE_NAME = "data/spotbugs.xml";
-	public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\lucene-solr\\";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2015-04-01 00:00:00"; 
-	public final static int CURRENT_REVISION_NUMBER = 3891;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2001-09-11 21:44:36.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 25862;
-	public final static Integer MAX_REVISION_NUMBER = 25862;
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "lucene_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "lucene_commit_content";
-	public final static String ISSUE_TABLE = "lucene_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-lucene/";
-	
-	public final static String WARNING_FILE_NAME = "data/warning-lucene-201504.xml";
-	public final static String FOLDER_NAME = "D://java-workstation//experimentalProject//lucene-201504//";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2015-04-01 00:00:00"; 
-	public final static int CURRENT_REVISION_NUMBER = 3891;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2001-09-11 21:44:36.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 25862;
-	public final static Integer MAX_REVISION_NUMBER = 25862;
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "tomcat_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "tomcat_commit_content";
-	public final static String ISSUE_TABLE = "tomcat_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-tomcat/";
-	
-	public final static String WARNING_FILE_NAME = "data/warning-tomcat-201504.xml";
-	public final static String FOLDER_NAME = "D://java-workstation//experimentalProject//tomcat-201504//";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2015-04-01 00:00:00"; 
-	public final static int CURRENT_REVISION_NUMBER = 3354;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2006-03-27 13:53:46";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 17995;
-	public final static Integer MAX_REVISION_NUMBER = 17995;
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "mvn_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "mvn_commit_content";
-	public final static String ISSUE_TABLE = "mvn_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-maven/";
-	
-	public final static String WARNING_FILE_NAME = "data/warning-mvn-201112.xml";
-	public final static String FOLDER_NAME = "D://java-workstation//experimentalProject//maven-201112//";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2011-12-01 00:00:00 "; 
-	public final static int CURRENT_REVISION_NUMBER = 1018;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2003-09-01 16:05:50.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 10178;
-	public final static Integer MAX_REVISION_NUMBER = 10178;
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "cass_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "cass_commit_content";
-	public final static String ISSUE_TABLE = "cass_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-cass/";
-	
-	public final static String WARNING_FILE_NAME = "data/warning-cass-201510.xml";
-	public final static String FOLDER_NAME = "D://java-workstation//experimentalProject//cass-201510//";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2015-10-01 00:00:00"; 
-	public final static int CURRENT_REVISION_NUMBER = 1732;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2009-03-02 07:57:22.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 13775;
-	public final static Integer MAX_REVISION_NUMBER = 13775;
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "ant_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "ant_commit_content";
-	public final static String ISSUE_TABLE = "ant_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-ant/";
-	
-	public final static String WARNING_FILE_NAME = "data/warning-ant-201101.xml";
-	public final static String FOLDER_NAME = "D://java-workstation//experimentalProject//ant-201101//";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2011-01-01 00:00:00"; 
-	public final static int CURRENT_REVISION_NUMBER = 1034;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2000-01-13 10:15:43.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 13497;
-	public final static Integer MAX_REVISION_NUMBER = 13497;
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "aspect_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "aspect_commit_content";
-	public final static String ISSUE_TABLE = "aspect_issue_info";
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "eclipse_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "eclipse_commit_content";
-	public final static String ISSUE_TABLE = "eclipse_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-eclipse/";
-	
-	public final static String WARNING_FILE_NAME = "data/warning-eclipse-201501.xml";
-	public final static String FOLDER_NAME = "D://java-workstation//experimentalProject//eclipse-201501//";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2015-01-01 00:00:00"; 
-	public final static int CURRENT_REVISION_NUMBER = 1006;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2001-06-05 16:17:58.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 22395;
-	public final static Integer MAX_REVISION_NUMBER = 22395;
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "commons_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "commons_commit_content";
-	public final static String ISSUE_TABLE = "commons_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-commons/";
-	
-	public final static String WARNING_FILE_NAME = "data/warning-commons-201201.xml";
-	public final static String FOLDER_NAME = "D://java-workstation//experimentalProject//commons-201201//";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2012-01-01 00:00:00"; 
-	public final static int CURRENT_REVISION_NUMBER = 1541;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2002-07-19 03:35:56.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 4805;
-	public final static Integer MAX_REVISION_NUMBER = 4805;
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "derby_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "derby_commit_content";
-	public final static String ISSUE_TABLE = "derby_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-derby/";
-	
-	public final static String WARNING_FILE_NAME = "data/warning-derby-201404.xml";
-	public final static String FOLDER_NAME = "D://java-workstation//experimentalProject//derby-201404//";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2014-04-01 00:00:00"; 
-	public final static int CURRENT_REVISION_NUMBER = 435;
-	
-	public final static String GIVEN_EARLIEST_TIME = "2004-08-11 21:07:37.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 8135;
-	public final static Integer MAX_REVISION_NUMBER = 8135;
-	*/
-	/*
-	public final static String COMMIT_INFO_TABLE = "jmeter_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "jmeter_commit_content";
-	public final static String ISSUE_TABLE = "jmeter_issue_info";
-	public final static String LOG_CODE_FOLDER_OUT  = "data/logcode-jmeter/";
-	
-	public final static String WARNING_FILE_NAME = "data/warning-jmeter-201512.xml";
-	public final static String FOLDER_NAME = "D://java-workstation//experimentalProject//jmeter-201512//";
-	
-	public final static String CURRENT_COMMIT_TIME 	= "2015-12-01 00:00:00"; 
-	public final static int CURRENT_REVISION_NUMBER = 2655;
-	
-	public final static String GIVEN_EARLIEST_TIME = "1998-09-03 00:24:13.000000";   
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 14044;
-	public final static Integer MAX_REVISION_NUMBER = 14044;
-		*/
-	
 	public final static String LOG_FILE_IN = "working/log.txt";
 	public final static String LOG_CODE_FILE_IN = "working/logCode.txt";
-	
-	public final static String GROUND_TRUTH_FOLDER = "working/groundtruth/";
-	
-	//public final static String WARNING_FILE_IN = "working/warning.csv";
+
+	// Output files
+	public final static String LOG_CODE_FOLDER_OUT  = "working/logcode-files/";
+	public final static String FEATURE_VALUE_OUTPUT_FOLDER = "working/feature/";
+
+	// Unused files
 	public final static String WARNING_FILE_OUT = "working/warning-result.txt";
+	public final static String GROUND_TRUTH_FOLDER = "working/groundtruth/";
+	//public final static String WARNING_FILE_IN = "working/warning.csv";
+
 	
-	public final static String PROJECT_NAME = "CONSTANTS_PROJECT_NAME";
+	/* The variables below do not need to be changed. */
 	
 	public static enum BUG_LOCATION_REGION_TYPE{
 		CLASS, FIELD, METHOD, TYPE, DEFAULT;
 	}
-	
 	public final static int FEATURE_SPLIT_SIZE = 20;
-	
-	public final static String CURRENT_TIME = "2021-05-21 14:47:25.000000";
 
 	//public final static String FORMER_REVISION_TIME_UNDER_INVEST = "2013-07-01 00:00:01";
 	//public final static String LATTER_REVISION_TIME_UNDER_INVEST = "2014-07-01 00:00:01";
-	
-	public final static String FEATURE_VALUE_OUTPUT_FOLDER = "working/feature/";
 	
 	public final static String[] WARN_CATEGORY_UNDER_INVESTIGATION = {"MALICIOUS_CODE", "CORRECTNESS", "PERFORMANCE", "SECURITY", 
 			"MT_CORRECTNESS", "BAD_PRACTICE", "EXPERIMENTAL", "STYLE", "I18N"};
