@@ -4,5 +4,3 @@
 # Except for the following
 !README.*
 !.gitignore
-!create.sql
-!feature id mapping.csv

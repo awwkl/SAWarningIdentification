@@ -245,6 +245,9 @@ public class LogParser {
 	
 	
 	public static void main ( String args[] ){
+		File output_dir = new File (Constants.LOG_CODE_FOLDER_OUT);
+		output_dir.mkdirs();	// make directory if not exists
+		
 		LogParser parser = new LogParser();
 		parser.parseLogInfo();
 		

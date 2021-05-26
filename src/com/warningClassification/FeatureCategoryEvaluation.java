@@ -27,7 +27,7 @@ public class FeatureCategoryEvaluation {
 		//得到的是类似F3这种类型的，实际在totalFeature中是F3-**，需要将具体的类型找到
 		BufferedReader brCategory;
 		try {
-			brCategory = new BufferedReader(new FileReader( new File ( "data/feature_category.csv" ) ));
+			brCategory = new BufferedReader(new FileReader( new File ( "resources/feature_category.csv" ) ));
 			String line = "";
 			while ( (line = brCategory.readLine()) != null ){
 				line = line.trim();

@@ -206,7 +206,7 @@ public class FeatureStatistics {
 			HashMap<Integer, String> featureCategoryMap = new HashMap<Integer, String>();
 			HashMap<String, Integer> refinedFeatureMap = new HashMap<String, Integer>();
 			
-			BufferedReader brCategory = new BufferedReader(new FileReader( new File ( "data/feature_category.csv" ) ));
+			BufferedReader brCategory = new BufferedReader(new FileReader( new File ( "resources/feature_category.csv" ) ));
 			String line = "";
 			while ( (line = brCategory.readLine()) != null ){
 				line = line.trim();

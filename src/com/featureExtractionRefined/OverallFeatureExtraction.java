@@ -85,8 +85,14 @@ public class OverallFeatureExtraction {
 	}
 	
 	public static void main ( String args[] ){
+		File output_dir = new File (Constants.FEATURE_VALUE_OUTPUT_FOLDER);
+		output_dir.mkdirs();	// make directory if not exists
+		
+		output_dir = new File (Constants.GROUND_TRUTH_FOLDER);
+		output_dir.mkdirs();	// make directory if not exists
+		
 		OverallFeatureExtraction featureExtraction = new OverallFeatureExtraction (  );
 		featureExtraction.extractAllFeatures(Constants.WARNING_FILE_NAME, Constants.FOLDER_NAME);
-		//featureExtraction.obtainWarningGroundtruth( Constants.WARNING_FILE_NAME, Constants.FOLDER_NAME );
+		featureExtraction.obtainWarningGroundtruth( Constants.WARNING_FILE_NAME, Constants.FOLDER_NAME );
 	}
 }
