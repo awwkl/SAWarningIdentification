@@ -224,14 +224,17 @@ public class WarningHistoryFeatureExtraction {
 				String line = "";
 				boolean isRelatedFile = false;
 				while ( ( line = br.readLine() ) != null ) {
-					// 一次commit会含有多个文件，找和fileName相同的文件的
-					if ( line.contains( fileName ))
-						isRelatedFile = true;
+					if ( line.startsWith( "diff")) {
+						if ( isRelatedFile ) 
+							break;
+						if ( line.contains(fileName) ) 
+							isRelatedFile = true;
+					} 
 					if ( isRelatedFile == false )
 						continue;
 					
-					if ( line.startsWith( "+ ") ){
-						line = line.substring( 2);
+					if ( line.startsWith( "+") && line.length() > 1 && !line.startsWith("+++") ){
+						line = line.substring(1);
 						line = line.trim();
 						if ( line.equals( ""))
 							continue;
