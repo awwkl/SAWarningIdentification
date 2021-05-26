@@ -91,26 +91,25 @@ public class WarningHistoryFeatureExtraction {
 				ArrayList<String> writeCodeList = new ArrayList<String>();
 				
 				while ( ( line = br.readLine() ) != null ) {
-					//fileName相关的文件已经遍历完了
-					if ( line.startsWith( "diff") && isRelatedFile == true )
-						break;
-					//接下来的都是与fileName文件相关的
-					if ( isRelatedFile == false && line.contains( fileName ))
-						isRelatedFile = true;
-					//如果是不相关的，继续
+					if ( line.startsWith( "diff")) {
+						if ( isRelatedFile ) 
+							break;
+						if ( line.contains(fileName) ) 
+							isRelatedFile = true;
+					} 
 					if ( isRelatedFile == false )
 						continue;
 					
 					writeCodeList.add( line );
-					if ( line.startsWith( "+ ")  ){
-						line = line.substring( 2);
+					if ( line.startsWith( "+") && line.length() > 1 && !line.startsWith("+++") ){
+						line = line.substring( 1);
 						line = line.trim();
 						if ( line.equals( ""))
 							continue;
 						addCodeList.add( line );
 					}
-					if ( line.startsWith( "- ")){
-						line = line.substring( 2);
+					if ( line.startsWith( "-") && line.length() > 1 && !line.startsWith("---") ){
+						line = line.substring( 1);
 						line = line.trim();
 						if ( line.equals( ""))
 							continue;
