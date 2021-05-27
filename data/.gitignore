@@ -4,3 +4,4 @@
 # Except for the following
 !README.*
 !.gitignore
+!config.yml

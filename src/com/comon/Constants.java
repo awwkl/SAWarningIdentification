@@ -5,50 +5,94 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.database.DBOperation;
+import java.sql.*;
+import java.time.*;
+import java.util.*;
+import java.io.*;
+import org.yaml.snakeyaml.*;
+
 import ca.uwaterloo.ece.qhanam.slicer.Slicer;
 
 public class Constants {
+	public static final DBOperation dbOperation = new DBOperation();
 	
-	// Set FOLDER_NAME to the root directory where you cloned the target project
-	public final static String CURRENT_TIME = "2021-05-21 14:47:25.000000";
-	public final static String PROJECT_NAME = "jadx";
-	public final static String FOLDER_NAME = "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\jadx\\";
+	public static String 	PROJECT_NAME;
+	public static String 	FOLDER_NAME;
+	public static String 	CURRENT_TIME;
 
-	// Before checking out a specific revision, obtain these values
-	public final static String GIVEN_EARLIEST_TIME = "2013-03-18 17:04:23";
-	public final static Integer GIVEN_EARLIEST_REVISION_NUMBER = 1402;
-	public final static Integer MAX_REVISION_NUMBER = 1402;
+	public static String 	GIVEN_EARLIEST_TIME;
+	public static Integer 	GIVEN_EARLIEST_REVISION_NUMBER;
+	public static Integer 	MAX_REVISION_NUMBER;
+
+	public static String 	CURRENT_COMMIT_TIME;
+	public static int 		REMAINING_REVISIONS;
+	public static int 		CURRENT_REVISION_NUMBER;
 	
-	// After deciding on the CURRENT_COMMIT_TIME, obtain the REMAINING_REVISIONS
-	public final static String CURRENT_COMMIT_TIME 	= "2021-04-01 00:00:00"; 
-	public final static int REMAINING_REVISIONS = 1386;
-	public final static int CURRENT_REVISION_NUMBER = MAX_REVISION_NUMBER - REMAINING_REVISIONS + 1;
-	
+	static {
+		try {
+			InputStream inputStream = new FileInputStream(new File("data/config.yml"));
+			Yaml yaml = new Yaml();
+			Map<String, Object> yaml_map = yaml.load(inputStream);
+			System.out.println(yaml_map);
+			
+			PROJECT_NAME 			= (String) yaml_map.get("PROJECT_NAME");
+			FOLDER_NAME 			= (String) yaml_map.get("FOLDER_NAME");
+			CURRENT_TIME 			= (String) yaml_map.get("CURRENT_TIME");
+			
+			try {
+				String sql = "select min(commitTime) as minTime from " + Constants.COMMIT_INFO_TABLE;
+				ResultSet rs = dbOperation.DBSelect(sql);
+				while ( rs.next() ) 
+					GIVEN_EARLIEST_TIME = rs.getString("minTime");
+
+				sql = "select count(*) as numCommits from " + Constants.COMMIT_INFO_TABLE;
+				rs = dbOperation.DBSelect(sql);
+				while ( rs.next() ) 
+					GIVEN_EARLIEST_REVISION_NUMBER = Integer.parseInt(rs.getString("numCommits"));
+
+				MAX_REVISION_NUMBER = GIVEN_EARLIEST_REVISION_NUMBER;
+			} catch (SQLException e) {
+				System.out.println("Error with SQL while setting YAML config.");
+				e.printStackTrace();
+			}
+
+			CURRENT_COMMIT_TIME 	= (String) yaml_map.get("CURRENT_COMMIT_TIME");
+			REMAINING_REVISIONS 	= (Integer) yaml_map.get("REMAINING_REVISIONS");
+			CURRENT_REVISION_NUMBER = MAX_REVISION_NUMBER - REMAINING_REVISIONS + 1;
+			
+			System.out.printf("%s, %s, %s \n", CURRENT_TIME, PROJECT_NAME, FOLDER_NAME);
+			System.out.printf("%s, %d, %d \n", GIVEN_EARLIEST_TIME, GIVEN_EARLIEST_REVISION_NUMBER, MAX_REVISION_NUMBER);
+			System.out.printf("%s, %d, %d \n", CURRENT_COMMIT_TIME, REMAINING_REVISIONS, CURRENT_REVISION_NUMBER);
+		} catch (Exception e) {
+			System.out.println("Error reading YAML config files.");
+			e.printStackTrace();
+		}
+	}
 	
 	/* The variables below are for the input & output data of the tool. They may not need to be changed. */
-
-	// SQL Database table names
-	public final static String COMMIT_INFO_TABLE = "SAWI_commit_info";
-	public final static String COMMIT_CONTENT_TABLE = "SAWI_commit_content";
-	public final static String ISSUE_TABLE = "SAWI_issue_info";
-
+	
 	// Directory for input & output data of tool
-	public final static String WORKING_DIR = "data/";
+	public static String WORKING_DIR = "data/";
 	
 	// Input files
-	public final static String WARNING_FILE_NAME = 	WORKING_DIR + "spotbugs.xml";
-	public final static String LOG_FILE_IN = 		WORKING_DIR + "log.txt";
-	public final static String LOG_CODE_FILE_IN = 	WORKING_DIR + "logCode.txt";
+	public static String LOG_FILE_IN = 					WORKING_DIR + "log.txt";
+	public static String LOG_CODE_FILE_IN = 			WORKING_DIR + "logCode.txt";
+	public static String WARNING_FILE_NAME = 			WORKING_DIR + "spotbugs.xml";
 
 	// Output files
-	public final static String LOG_CODE_FOLDER_OUT  = 			WORKING_DIR + "logcode-files/";
-	public final static String FEATURE_VALUE_OUTPUT_FOLDER = 	WORKING_DIR + "feature/";
+	public static String LOG_CODE_FOLDER_OUT  = 		WORKING_DIR + "logcode-files/";
+	public static String FEATURE_VALUE_OUTPUT_FOLDER = 	WORKING_DIR + "feature/";
+	public static String GROUND_TRUTH_FOLDER = 			WORKING_DIR + "groundtruth/";
 
 	// Unused files
-	public final static String WARNING_FILE_OUT = 		WORKING_DIR + "warning-result.txt";
-	public final static String GROUND_TRUTH_FOLDER = 	WORKING_DIR + "groundtruth/";
-	// public final static String WARNING_FILE_IN = 		WORKING_DIR + "warning.csv";
+	public static String WARNING_FILE_OUT = 			WORKING_DIR + "warning-result.txt";
+	// public static String WARNING_FILE_IN = 				WORKING_DIR + "warning.csv";
 
+	// SQL Database table names
+	public static final String COMMIT_INFO_TABLE = 		"SAWI_commit_info";
+	public static final String COMMIT_CONTENT_TABLE = 	"SAWI_commit_content";
+	public static final String ISSUE_TABLE = 			"SAWI_issue_info";
 
 	/* The variables below do not need to be changed. */
 	
