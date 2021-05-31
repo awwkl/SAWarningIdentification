@@ -38,7 +38,7 @@ public class FeatureEvaluation {
 				
 				ArrayList<String> selectedFeatureList = this.obtainSelectedFeatureList( folderName + fileName);
 				// "/featureRank.csv"
-				
+
 				HashMap<String, Double> featureEvaluation = new HashMap<String, Double>();
 				for ( int i =0; i < selectedFeatureList.size(); i++ ){
 					//去掉selectedFeatureList[i]
@@ -187,14 +187,14 @@ public class FeatureEvaluation {
 			//System.out.println ( evaluation.toClassDetailsString() );
 			//System.out.println ( evaluation.toMatrixString(  ) );
 			
-		    //Double accuracy = evaluation.weightedFMeasure();
-		    //Double accuracy = (1.0* (evaluation.truePositiveRate( 0) + evaluation.trueNegativeRate( 0) ) ) / (evaluation.truePositiveRate( 0) + 
+		    //Double score = evaluation.weightedFMeasure();
+		    //Double score = (1.0* (evaluation.truePositiveRate( 0) + evaluation.trueNegativeRate( 0) ) ) / (evaluation.truePositiveRate( 0) + 
 		    //		evaluation.trueNegativeRate( 0) + evaluation.falsePositiveRate(0) + evaluation.falseNegativeRate(0));
 		    
-		    Double accuracy = evaluation.fMeasure(1);
-		    //Double accuracy = (1.0* evaluation.truePositiveRate( 0) ) / (evaluation.truePositiveRate( 0) +  evaluation.falsePositiveRate(0) ); precision
-		    //Double accuracy = evaluation.fMeasure(1);
-		    return accuracy;
+		    Double score = evaluation.fMeasure(1);
+		    //Double score = (1.0* evaluation.truePositiveRate( 0) ) / (evaluation.truePositiveRate( 0) +  evaluation.falsePositiveRate(0) ); precision
+		    //Double score = evaluation.fMeasure(1);
+		    return score;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -292,10 +292,10 @@ public class FeatureEvaluation {
 		
 		String fileTrain = this.generateFeatureValueBasedSelectedFeatures(folderName, selectedFeatureList );
 		
-		Double accuracy = this.conductPrediction(fileTrain);
-		System.out.println( "The prediction accuracy of singleRevisionFeatureSetEvaluation in " + folderName + " is : " + accuracy );
+		Double fMeasure = this.conductPrediction(fileTrain);
+		System.out.println( "The prediction fMeasure of singleRevisionFeatureSetEvaluation in " + folderName + " is : " + fMeasure );
 		
-		return accuracy;
+		return fMeasure;
 	}
 	
 	public Double totalFeatureSetSelection( String folderName ){
@@ -320,7 +320,8 @@ public class FeatureEvaluation {
 	
 	public static void main ( String args[] ){
 		FeatureEvaluation evaluation = new FeatureEvaluation();
-		evaluation.selectedFeatureRank( "/featureRank.csv" );
+		// evaluation.selectedFeatureRank( "/featureRank.csv" );
+		evaluation.singleRevisionFeatureSetEvaluation( "data/feature" );
 		
 		/*
 		 * 需要注意的是，featureRankCombine要转化成和单个项目的featureRank类似的形式，三列，第三列是feature name
