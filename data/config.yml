@@ -6,7 +6,7 @@ FOLDER_NAME: "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\jadx\\"
 
 # Set CURRENT_TIME to the cut-off time for checking whether a bug was closed.
 # This allows a standardized cut-off time if you are analyzing multiple target projects
-CURRENT_TIME: "2021-05-27 00:00:00"
+CURRENT_TIME: "2021-06-05 00:00:00"
 
 # Set CURRENT_COMMIT_TIME to be a point in time (datetime) you wish to analyze the target project
 CURRENT_COMMIT_TIME : "2020-04-01 00:00:00"
