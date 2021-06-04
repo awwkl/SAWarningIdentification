@@ -54,6 +54,7 @@ public class OverallFeatureExtraction {
 		//System.out.println( statusAll.size() + "=======================================================");
 		this.writeToFile( statusBug, Constants.FEATURE_VALUE_OUTPUT_FOLDER + "labelBug.csv", "bug");
 		this.writeToFile( statusAll, Constants.FEATURE_VALUE_OUTPUT_FOLDER + "labelAll.csv", "all");
+		this.writeToFile( statusAll, Constants.FINAL_OUTPUT_FOLDER + "labelAll.csv", "all");
 	}
 	
 	
@@ -89,6 +90,9 @@ public class OverallFeatureExtraction {
 		output_dir.mkdirs();	// make directory if not exists
 		
 		output_dir = new File (Constants.GROUND_TRUTH_FOLDER);
+		output_dir.mkdirs();	// make directory if not exists
+		
+		output_dir = new File (Constants.FINAL_OUTPUT_FOLDER);
 		output_dir.mkdirs();	// make directory if not exists
 		
 		OverallFeatureExtraction featureExtraction = new OverallFeatureExtraction (  );

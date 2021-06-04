@@ -236,7 +236,7 @@ public class FeatureRefinement {
 		
 		System.out.println( "final number of features: " + mergedFeatures.size() );
 		try {
-			BufferedWriter output = new BufferedWriter ( new OutputStreamWriter ( new FileOutputStream ( new File ( "data/feature/totalFeatures.csv" )) , "GB2312"), 1024);
+			BufferedWriter output = new BufferedWriter ( new OutputStreamWriter ( new FileOutputStream ( new File ( Constants.FINAL_OUTPUT_FOLDER + "totalFeatures.csv" )) , "GB2312"), 1024);
 			BufferedReader br = new BufferedReader(new FileReader( new File ( "data/feature/labelAll.csv" )));
 			
 			HashMap<Integer, String> categoryMap = new HashMap<Integer, String>();

@@ -84,6 +84,7 @@ public class Constants {
 	public static String LOG_CODE_FOLDER_OUT  = 		WORKING_DIR + "logcode-files/";
 	public static String FEATURE_VALUE_OUTPUT_FOLDER = 	WORKING_DIR + "feature/";
 	public static String GROUND_TRUTH_FOLDER = 			WORKING_DIR + "groundtruth/";
+	public static String FINAL_OUTPUT_FOLDER = 			WORKING_DIR + "tool-output/";
 
 	// Unused files
 	public static String WARNING_FILE_OUT = 			WORKING_DIR + "warning-result.txt";
