@@ -12,6 +12,9 @@ import com.featureExtractionInitial.WarningHistoryFeatureExtraction;
 import com.featureExtractionInitial.WarningParser;
 
 public class WarningCombinedExtraction extends BasicFeatureExtraction{
+	WarningCombinedExtraction oldRevisionExtraction;
+	String folderName;
+	
 	ArrayList<String> warningStatusList;
 	ArrayList<String> warningStatusListInBugFix;
 	ArrayList<String> warningStatusListInNoBugFix;
@@ -29,6 +32,7 @@ public class WarningCombinedExtraction extends BasicFeatureExtraction{
 	public WarningCombinedExtraction(String fileName, String folderName) {
 		super(fileName, folderName);
 		// TODO Auto-generated constructor stub
+		this.folderName = folderName;
 	}
 
 	@Override
@@ -36,36 +40,55 @@ public class WarningCombinedExtraction extends BasicFeatureExtraction{
 		// TODO Auto-generated method stub
 		super.featureExtractionPrecondition();
 		
-		WarningHistoryFeatureExtraction featureExtraction = new WarningHistoryFeatureExtraction();
-		warningStatusList = featureExtraction.obtainWarningStatus(warningList, "all");
-		warningStatusListInBugFix = featureExtraction.obtainWarningStatus(warningList, "bug fix");		
-		warningStatusListInNoBugFix = featureExtraction.obtainWarningStatus( warningList, "non bug fix");
-		System.out.println( warningStatusListInBugFix.toString() );
-	
-		WarningCombinedFeatureExtraction featureExtractionComb = new WarningCombinedFeatureExtraction();
-		statusPercentMap = featureExtractionComb.obtainClosedSuppressedRatio(warningList, warningStatusList);
+		// oldRevisionExtraction is used to access old revision's warnings' data
+		// Only set up an oldRevisionExtraction for the current Revision, otherwise infinite recursion of instantiation
+		if (folderName.equals( Constants.FOLDER_NAME )) {
+			System.out.println("@@@ A: About to create a WarningCombinedExtraction for old revision");
+			
+			String oldCurrentTime = Constants.CURRENT_TIME;
+			Constants.CURRENT_TIME = Constants.CURRENT_COMMIT_TIME;
+			Constants.CURRENT_COMMIT_TIME = Constants.OLD_REVISION_COMMIT_TIME;
+			
+			oldRevisionExtraction = new WarningCombinedExtraction ( Constants.OLD_REVISION_WARNING_FILE, Constants.OLD_REVISION_FOLDER_NAME );
+			oldRevisionExtraction.featureExtractionPrecondition();
+
+			Constants.CURRENT_COMMIT_TIME = Constants.CURRENT_TIME;
+			Constants.CURRENT_TIME = oldCurrentTime;
+
+			System.out.println("@@@ B: Completed setting up WarningCombinedExtraction for old revision");
+
+		} else {	// Only set up for oldRevisionExtraction
+			WarningHistoryFeatureExtraction featureExtraction = new WarningHistoryFeatureExtraction();
+			warningStatusList = featureExtraction.obtainWarningStatus(warningList, "all");
+			warningStatusListInBugFix = featureExtraction.obtainWarningStatus(warningList, "bug fix");		
+			warningStatusListInNoBugFix = featureExtraction.obtainWarningStatus( warningList, "non bug fix");
+			System.out.println( warningStatusList.toString() );
 		
-		WarningParser warnParser = new WarningParser();
-		warningNumberForMethod = warnParser.obtainWarningNumberForMethod(warningList);
+			WarningCombinedFeatureExtraction featureExtractionComb = new WarningCombinedFeatureExtraction();
+			statusPercentMap = featureExtractionComb.obtainClosedSuppressedRatio(warningList, warningStatusList);
+			
+			WarningParser warnParser = new WarningParser();
+			warningNumberForMethod = warnParser.obtainWarningNumberForMethod(warningList);
+			
+			closeSuppressRatio = featureExtractionComb.obtainClosedSuppressedRatioMetFPro(warningList, warningStatusList, projectInfo, warningNumberForMethod);
+					
+			warningInfo = warnParser.obtainWarningTypeCategoryInfo(warningList);
+			
+			WarningCharacFeatureExtraction featureExtractionChr = new WarningCharacFeatureExtraction();
+			
+			categoryCountMap = featureExtractionChr.obtainWarningAccordingCategory(warningList, warningStatusListInBugFix, warningStatusListInNoBugFix);
+			
+			HashMap<String, HashMap<String, Integer>> typeCountMap = featureExtractionChr.obtainWarningAccordingType(warningList, warningStatusList);
+			
+			HashMap<String, Integer> warningTypeCountMap =typeCountMap.get( "number");
+			HashMap<String, Integer> closeTypeCountMap = typeCountMap.get ( "percent");
+			defectLikelihoodMap = featureExtractionComb.obtainDefectLikelihoodType(closeTypeCountMap, warningTypeCountMap, warningInfo);
+			
+			HashMap<String, Double> defectLikelihoodType = defectLikelihoodMap.get("likelihood" );
+			defectLikelihoodCat = featureExtractionComb.obtainDefectLikelihoodCategory(warningInfo, defectLikelihoodType, warningTypeCountMap);
 		
-		closeSuppressRatio = featureExtractionComb.obtainClosedSuppressedRatioMetFPro(warningList, warningStatusList, projectInfo, warningNumberForMethod);
-				
-		warningInfo = warnParser.obtainWarningTypeCategoryInfo(warningList);
-		
-		WarningCharacFeatureExtraction featureExtractionChr = new WarningCharacFeatureExtraction();
-		
-		categoryCountMap = featureExtractionChr.obtainWarningAccordingCategory(warningList, warningStatusListInBugFix, warningStatusListInNoBugFix);
-		
-		HashMap<String, HashMap<String, Integer>> typeCountMap = featureExtractionChr.obtainWarningAccordingType(warningList, warningStatusList);
-		
-		HashMap<String, Integer> warningTypeCountMap =typeCountMap.get( "number");
-		HashMap<String, Integer> closeTypeCountMap = typeCountMap.get ( "percent");
-		defectLikelihoodMap = featureExtractionComb.obtainDefectLikelihoodType(closeTypeCountMap, warningTypeCountMap, warningInfo);
-		
-		HashMap<String, Double> defectLikelihoodType = defectLikelihoodMap.get("likelihood" );
-		defectLikelihoodCat = featureExtractionComb.obtainDefectLikelihoodCategory(warningInfo, defectLikelihoodType, warningTypeCountMap);
-	
-		lifetimeCategory = featureExtractionComb.obtainLifetimeCategory(warningInfo, warningList);
+			lifetimeCategory = featureExtractionComb.obtainLifetimeCategory(warningInfo, warningList);
+		}
 	}
 	
 	
@@ -73,18 +96,18 @@ public class WarningCombinedExtraction extends BasicFeatureExtraction{
 	public HashMap<String, Object> extractFeatures(StaticWarning warning, int index ) {
 		// TODO Auto-generated method stub
 		super.extractFeatures(warning, index);
-		
+
 		WarningCombinedFeatureExtraction featureExtraction = new WarningCombinedFeatureExtraction();
 		
 		String type = warning.getBugInfo().getType();
-		double F110 = featureExtraction.extractClosedSuppressedRatioType_F110(type, statusPercentMap);
+		double F110 = featureExtraction.extractClosedSuppressedRatioType_F110(type, oldRevisionExtraction.statusPercentMap);
 		
 		String fileName = warning.getBugLocationList().get(0).getClassName();
 		String packageName = projectInfo.getFilePackageNameMap().get( fileName );
 			
-		HashMap<String, Double> warningRatioMapPackage = closeSuppressRatio.get( "package" );
-		HashMap<String, Double> warningRatioMapFile = closeSuppressRatio.get( "file" );
-		HashMap<String, Double> warningRatioMapMethod = closeSuppressRatio.get( "method" );
+		HashMap<String, Double> warningRatioMapPackage = oldRevisionExtraction.closeSuppressRatio.get( "package" );
+		HashMap<String, Double> warningRatioMapFile = oldRevisionExtraction.closeSuppressRatio.get( "file" );
+		HashMap<String, Double> warningRatioMapMethod = oldRevisionExtraction.closeSuppressRatio.get( "method" );
 		
 		double F114 = featureExtraction.extractClosedSuppressedRatioPackage_F114(packageName, warningRatioMapPackage);
 		double F115 = featureExtraction.extractClosedSuppressedRatioFile_F115(fileName, warningRatioMapFile);
@@ -95,9 +118,9 @@ public class WarningCombinedExtraction extends BasicFeatureExtraction{
 		}
 		F116 = F116 / warning.getBugLocationList().size();
 		
-		HashMap<String, Double> warningCategoryCountBugFix = categoryCountMap.get( "bugfix");
-		HashMap<String, Double> warningCategoryCountNoBugFix = categoryCountMap.get( "nobugfix");
-		System.out.println( "==========================================\n" + categoryCountMap.toString() );
+		HashMap<String, Double> warningCategoryCountBugFix = oldRevisionExtraction.categoryCountMap.get( "bugfix");
+		HashMap<String, Double> warningCategoryCountNoBugFix = oldRevisionExtraction.categoryCountMap.get( "nobugfix");
+		System.out.println( "==========================================\n" + oldRevisionExtraction.categoryCountMap.toString() );
 		String category = warning.getBugInfo().getCategory();
 		double F121 = 0.0;
 		if ( warningCategoryCountBugFix.containsKey( category ))
@@ -106,14 +129,14 @@ public class WarningCombinedExtraction extends BasicFeatureExtraction{
 		if ( warningCategoryCountNoBugFix.containsKey( category ) )
 			F122 = warningCategoryCountNoBugFix.get( category );
 		
-		HashMap<String, Double> defectLikelihoodType = defectLikelihoodMap.get("likelihood" );
-		HashMap<String, Double> defectLikelihoodPercentType = defectLikelihoodMap.get("variance" );
+		HashMap<String, Double> defectLikelihoodType = oldRevisionExtraction.defectLikelihoodMap.get("likelihood" );
+		HashMap<String, Double> defectLikelihoodPercentType = oldRevisionExtraction.defectLikelihoodMap.get("variance" );
 		
 		double F117 = featureExtraction.extractDefectLikelihoodType_F117(type, defectLikelihoodType);
 		double F118 = featureExtraction.extractDefectLikelihoodVarianceType_F118(type, defectLikelihoodPercentType);
 		
-		HashMap<String, Double> defectLikelihoodCategory = defectLikelihoodCat.get( "likelihood");
-		HashMap<String, Double> defectLikelihoodDiscretCategory = defectLikelihoodCat.get( "variance");
+		HashMap<String, Double> defectLikelihoodCategory = oldRevisionExtraction.defectLikelihoodCat.get( "likelihood");
+		HashMap<String, Double> defectLikelihoodDiscretCategory = oldRevisionExtraction.defectLikelihoodCat.get( "variance");
 		
 		double F119 = featureExtraction.extractDefectLikelihoodCategory_F119(category, defectLikelihoodCategory);
 		double F120 = featureExtraction.extractDefectLikelihoodVarianceCategory_F120(category, defectLikelihoodDiscretCategory);

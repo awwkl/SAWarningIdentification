@@ -6,12 +6,18 @@ FOLDER_NAME: "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\jadx\\"
 
 # Set CURRENT_TIME to the cut-off time for checking whether a bug was closed.
 # This allows a standardized cut-off time if you are analyzing multiple target projects
-CURRENT_TIME: "2021-06-05 00:00:00"
+CURRENT_TIME: "2021-06-17 00:00:00"
 
 # Set CURRENT_COMMIT_TIME to be a point in time (datetime) you wish to analyze the target project
-CURRENT_COMMIT_TIME : "2020-04-01 00:00:00"
+CURRENT_COMMIT_TIME : "2021-01-01 00:00:00"
+
+# Set OLD_REVISION_FOLDER_NAME to the root directory of the old project revision
+OLD_REVISION_FOLDER_NAME: "C:\\Users\\65983\\Desktop\\soar_lab\\projects\\jadx-old-revision\\"
+
+# Set OLD_REVISION_COMMIT_TIME to be the point in time for the old project revision
+OLD_REVISION_COMMIT_TIME: "2020-06-01 00:00:00"
 
 # Set REMAINING_REVISIONS to the number of remaining revisions, after checking out the specific revision
-REMAINING_REVISIONS: 1149
+REMAINING_REVISIONS: 1338
 
 # Not able to change the working directory from `data/` yet because the old code still hard-codes `data/`

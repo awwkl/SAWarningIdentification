@@ -29,6 +29,9 @@ public class Constants {
 	public static int 		REMAINING_REVISIONS;
 	public static int 		CURRENT_REVISION_NUMBER;
 	
+	public static String 	OLD_REVISION_FOLDER_NAME;
+	public static String 	OLD_REVISION_COMMIT_TIME;
+	
 	static {
 		try {
 			InputStream inputStream = new FileInputStream(new File("data/config.yml"));
@@ -36,10 +39,13 @@ public class Constants {
 			Map<String, Object> yaml_map = yaml.load(inputStream);
 			System.out.println(yaml_map);
 			
-			PROJECT_NAME 			= (String) yaml_map.get("PROJECT_NAME");
-			FOLDER_NAME 			= (String) yaml_map.get("FOLDER_NAME");
-			CURRENT_TIME 			= (String) yaml_map.get("CURRENT_TIME");
-			
+			PROJECT_NAME 				= (String) yaml_map.get("PROJECT_NAME");
+			FOLDER_NAME 				= (String) yaml_map.get("FOLDER_NAME");
+			CURRENT_TIME 				= (String) yaml_map.get("CURRENT_TIME");
+
+			OLD_REVISION_FOLDER_NAME	= (String) yaml_map.get("OLD_REVISION_FOLDER_NAME");
+			OLD_REVISION_COMMIT_TIME	= (String) yaml_map.get("OLD_REVISION_COMMIT_TIME");
+
 			try {
 				String sql = "select min(commitTime) as minTime from " + Constants.COMMIT_INFO_TABLE;
 				ResultSet rs = dbOperation.DBSelect(sql);
@@ -79,6 +85,8 @@ public class Constants {
 	public static String LOG_FILE_IN = 					WORKING_DIR + "log.txt";
 	public static String LOG_CODE_FILE_IN = 			WORKING_DIR + "logCode.txt";
 	public static String WARNING_FILE_NAME = 			WORKING_DIR + "spotbugs.xml";
+	
+	public static String OLD_REVISION_WARNING_FILE = 	WORKING_DIR + "spotbugs-old-revision.xml";
 
 	// Output files
 	public static String LOG_CODE_FOLDER_OUT  = 		WORKING_DIR + "logcode-files/";
